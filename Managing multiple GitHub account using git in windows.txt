@@ -1,0 +1,44 @@
+Managing multiple GitHub account using git in windows
+
+1. Generate SSH Keys:
+	First Account:
+	$ ssh-keygen -t rsa -C "your_email_id_associated_with_githubPersonal_account"
+	save it as id_rsa_personal
+
+
+	Second Account:
+	$ ssh-keygen -t rsa -C "your_email_id_associated_with_githubWork_account"
+	save it as id_rsa_work
+
+
+
+2. Add the keys to your Github accounts:
+	First Account:
+	 	copy content in "id_rsa_personal.pub" file 
+		GitHub Account Settings --> SSH Keys --> Add SSH key
+
+	Repeat the process for your githubWork account.
+
+
+3. Create a configuration file
+	Create a configuration file to manage the separate keys in ~/.ssh/ 
+
+	Create "~/.ssh/config" file add following content
+
+		# githubPersonal
+		Host personal
+		   HostName github.com
+		   User git
+		   IdentityFile ~/.ssh/id_rsa_personal
+
+		# githubWork
+		Host work
+		   HostName github.com
+		   User git
+		   IdentityFile ~/.ssh/id_rsa_work
+
+
+
+4. Test to make sure Github recognizes the keys:
+	$ ssh -T personal
+	$ ssh -T work
